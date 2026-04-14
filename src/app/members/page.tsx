@@ -524,7 +524,7 @@ export default function MembersPage() {
             })}
           </div>
           <div className="overflow-x-auto rounded-[24px] border border-line bg-white">
-            <table className="min-w-[980px] w-full text-sm xl:min-w-full">
+            <table className="min-w-full w-full table-auto text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-slate-500">
                   <th className="px-5 py-4 font-medium">Name</th>

@@ -22,7 +22,7 @@ export function Sidebar() {
       : navItems.filter((item) => item.href !== "/staff");
 
   return (
-    <aside className="w-full px-4 py-4 lg:min-h-screen lg:w-[300px] lg:px-6 lg:py-8">
+    <aside className="w-full max-w-full px-4 py-4 lg:min-h-screen lg:w-[300px] lg:flex-shrink-0 lg:px-6 lg:py-8">
       <div className="rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(9,11,15,0.98),rgba(16,20,27,0.96))] p-4 text-white shadow-float lg:min-h-[calc(100vh-4rem)] lg:p-6">
         <div className="flex items-center justify-between lg:block">
           <ChampionBrand compact tone="dark" />

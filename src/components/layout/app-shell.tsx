@@ -16,7 +16,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="absolute bottom-12 left-1/3 h-44 w-44 rounded-full bg-accent/10 blur-3xl" />
       </div>
       <div
-        className={`relative mx-auto flex min-h-screen max-w-[1650px] min-w-0 ${
+        className={`relative mx-auto flex w-full min-h-screen max-w-[1650px] min-w-0 ${
           isLoginPage ? "items-stretch justify-center" : "flex-col lg:flex-row"
         }`}
       >

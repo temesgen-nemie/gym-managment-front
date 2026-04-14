@@ -1,7 +1,8 @@
 const DEFAULT_API_BASE_URL = "http://localhost:5000/api";
 
-export const apiBaseUrl =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ?? DEFAULT_API_BASE_URL;
+const configuredApiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.trim().replace(/\/$/, "");
+
+export const apiBaseUrl = configuredApiBaseUrl || DEFAULT_API_BASE_URL;
 
 type ApiRequestOptions = {
   method?: "GET" | "POST" | "PUT" | "DELETE";

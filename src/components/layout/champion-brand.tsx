@@ -47,7 +47,7 @@ export function ChampionBrand({
       <div className="min-w-0">
         <p
           className={`leading-none ${inkClass} ${
-            compact ? "text-[2rem]" : "text-[2.8rem]"
+            compact ? "text-[2rem]" : "text-[2.4rem] sm:text-[2.8rem]"
           } font-black italic tracking-[-0.06em]`}
         >
           Champion
