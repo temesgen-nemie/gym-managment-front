@@ -415,7 +415,7 @@ export default function StaffPage() {
       </SectionCard>
 
       {isCreateModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
           <div className="max-h-[90vh] w-full max-w-xl overflow-hidden rounded-[30px] border border-white/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(246,247,249,0.94))] shadow-[0_30px_90px_-30px_rgba(0,0,0,0.4)]">
             <div className="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
               <div>
@@ -434,7 +434,7 @@ export default function StaffPage() {
               </button>
             </div>
 
-            <div className="max-h-[calc(90vh-110px)] overflow-y-auto px-4 py-6 md:px-6">
+            <div className="max-h-[calc(90vh-110px)] overflow-y-auto overscroll-contain px-4 py-6 md:px-6">
               <form className="grid gap-4" onSubmit={handleSubmit}>
                 <label className="grid gap-2 text-sm font-medium text-slate-700">
                   Full Name
@@ -496,7 +496,7 @@ export default function StaffPage() {
       )}
 
       {editUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
           <div className="max-h-[90vh] w-full max-w-xl overflow-hidden rounded-[30px] border border-white/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(246,247,249,0.94))] shadow-[0_30px_90px_-30px_rgba(0,0,0,0.4)]">
             <div className="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
               <div>
@@ -513,7 +513,7 @@ export default function StaffPage() {
               </button>
             </div>
 
-            <div className="max-h-[calc(90vh-110px)] overflow-y-auto px-4 py-6 md:px-6">
+            <div className="max-h-[calc(90vh-110px)] overflow-y-auto overscroll-contain px-4 py-6 md:px-6">
               <form className="grid gap-4" onSubmit={handleEditSubmit}>
                 <label className="grid gap-2 text-sm font-medium text-slate-700">
                   Full Name
@@ -587,7 +587,7 @@ export default function StaffPage() {
       )}
 
       {deleteUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
           <div className="max-h-[90vh] w-full max-w-md overflow-hidden rounded-[30px] border border-white/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(246,247,249,0.94))] shadow-[0_30px_90px_-30px_rgba(0,0,0,0.4)]">
             <div className="border-b border-line px-6 py-5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-rose-600">Delete Staff</p>

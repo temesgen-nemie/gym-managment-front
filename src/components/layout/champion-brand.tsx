@@ -52,17 +52,23 @@ export function ChampionBrand({
         >
           Champion
         </p>
-        <div className={`mt-1 flex items-center gap-3 ${subClass}`}>
+        <div className={`mt-1 flex items-center gap-2 ${subClass}`}>
           <div className="flex items-center gap-1 text-[#F4AB20]">
             <span className="h-3 w-1 rounded-full bg-current" />
             <span className="h-5 w-1 rounded-full bg-current" />
             <span className="h-7 w-1 rounded-full bg-current" />
-            <span className={`h-1 ${compact ? "w-12" : "w-16"} rounded-full bg-current`} />
+            <span className={`h-1 ${compact ? "w-10" : "w-16"} rounded-full bg-current`} />
             <span className="h-7 w-1 rounded-full bg-current" />
             <span className="h-5 w-1 rounded-full bg-current" />
             <span className="h-3 w-1 rounded-full bg-current" />
           </div>
-          <span className="text-sm font-black uppercase tracking-[0.34em]">Gym</span>
+          <span
+            className={`whitespace-nowrap font-black uppercase leading-none ${
+              compact ? "text-[0.65rem] tracking-[0.24em]" : "text-sm tracking-[0.34em]"
+            }`}
+          >
+            Gym
+          </span>
         </div>
       </div>
     </div>

@@ -46,6 +46,7 @@ export default function MembershipPlansPage() {
   const [plans, setPlans] = useState<MembershipPlan[]>([]);
   const [form, setForm] = useState<PlanFormState>(initialFormState);
   const [editingPlanId, setEditingPlanId] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -86,6 +87,18 @@ export default function MembershipPlansPage() {
     setEditingPlanId(null);
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    resetForm();
+  };
+
+  const openCreateModal = () => {
+    resetForm();
+    setError(null);
+    setSuccessMessage(null);
+    setIsModalOpen(true);
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -121,7 +134,7 @@ export default function MembershipPlansPage() {
       });
 
       setSuccessMessage(editingPlanId ? "Membership plan updated." : "Membership plan created.");
-      resetForm();
+      closeModal();
       await loadPlans();
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Failed to save plan");
@@ -142,6 +155,7 @@ export default function MembershipPlansPage() {
     });
     setError(null);
     setSuccessMessage(null);
+    setIsModalOpen(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -160,7 +174,7 @@ export default function MembershipPlansPage() {
       });
 
       if (editingPlanId === id) {
-        resetForm();
+        closeModal();
       }
 
       setSuccessMessage("Membership plan deleted.");
@@ -217,123 +231,22 @@ export default function MembershipPlansPage() {
         </SectionCard>
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-[1.05fr_1.65fr]">
-        <SectionCard
-          title={editingPlanId ? "Edit Membership Plan" : "Create Membership Plan"}
-          description="Set the duration, billing cycle, and price used across the member and payment flows."
-        >
-          <form className="grid gap-4" onSubmit={handleSubmit}>
-            <label className="grid gap-2 text-sm font-medium text-slate-700">
-              Plan Name
-              <input
-                value={form.name}
-                onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
-                placeholder="Monthly"
-                className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
-              />
-            </label>
-
-            <label className="grid gap-2 text-sm font-medium text-slate-700">
-              Description
-              <textarea
-                value={form.description}
-                onChange={(event) =>
-                  setForm((current) => ({ ...current, description: event.target.value }))
-                }
-                rows={3}
-                placeholder="Short note about this membership plan"
-                className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
-              />
-            </label>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <label className="grid gap-2 text-sm font-medium text-slate-700">
-                Duration (days)
-                <input
-                  type="number"
-                  min="1"
-                  value={form.durationDays}
-                  onChange={(event) =>
-                    setForm((current) => ({ ...current, durationDays: event.target.value }))
-                  }
-                  className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
-                />
-              </label>
-
-              <label className="grid gap-2 text-sm font-medium text-slate-700">
-                Price
-                <input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={form.price}
-                  onChange={(event) => setForm((current) => ({ ...current, price: event.target.value }))}
-                  className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
-                />
-              </label>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <label className="grid gap-2 text-sm font-medium text-slate-700">
-                Billing Cycle
-                <select
-                  value={form.billingCycle}
-                  onChange={(event) =>
-                    setForm((current) => ({ ...current, billingCycle: event.target.value }))
-                  }
-                  className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
-                >
-                  <option value="monthly">Monthly</option>
-                  <option value="yearly">Yearly</option>
-                  <option value="custom">Custom</option>
-                </select>
-              </label>
-
-              <label className="grid gap-2 text-sm font-medium text-slate-700">
-                Status
-                <select
-                  value={form.isActive ? "active" : "inactive"}
-                  onChange={(event) =>
-                    setForm((current) => ({ ...current, isActive: event.target.value === "active" }))
-                  }
-                  className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
-                >
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </label>
-            </div>
-
-            {(error || successMessage) && (
-              <div
-                className={`rounded-[20px] px-4 py-3 text-sm ${
-                  error ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"
-                }`}
-              >
-                {error ?? successMessage}
-              </div>
-            )}
-
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="submit"
-                disabled={isSubmitting || !isAdmin}
-                className="rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accentDark disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isSubmitting ? "Saving..." : submitLabel}
-              </button>
-              <button
-                type="button"
-                onClick={resetForm}
-                className="rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-sand"
-              >
-                Reset
-              </button>
-            </div>
-          </form>
-        </SectionCard>
-
-        <SectionCard title="Membership Plans" description="Plans available across the gym system.">
+      <SectionCard
+        title="Membership Plans"
+        description="Plans available across the gym system."
+        headerAction={
+          isAdmin ? (
+            <button
+              type="button"
+              onClick={openCreateModal}
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accentDark"
+            >
+              <span className="text-base leading-none">+</span>
+              <span>Create Membership Plan</span>
+            </button>
+          ) : null
+        }
+      >
           <div className="grid gap-4">
             {isLoading ? (
               <div className="rounded-[22px] bg-sand px-4 py-5 text-sm text-slate-500">Loading plans...</div>
@@ -394,8 +307,146 @@ export default function MembershipPlansPage() {
               ))
             )}
           </div>
-        </SectionCard>
-      </div>
+      </SectionCard>
+
+      {isModalOpen ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
+          <div className="max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-[30px] border border-white/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(246,247,249,0.94))] shadow-[0_30px_90px_-30px_rgba(0,0,0,0.4)]">
+            <div className="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-accent">Plan Form</p>
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink">
+                  {editingPlanId ? "Edit Membership Plan" : "Create Membership Plan"}
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-slate-500">
+                  Set the duration, billing cycle, and price used across the member and payment flows.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={closeModal}
+                className="rounded-full border border-line bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-sand"
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="max-h-[calc(90vh-110px)] overflow-y-auto overscroll-contain px-4 py-6 md:px-6">
+              <form className="grid gap-4" onSubmit={handleSubmit}>
+              <label className="grid gap-2 text-sm font-medium text-slate-700">
+                Plan Name
+                <input
+                  value={form.name}
+                  onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
+                  placeholder="Monthly"
+                  className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
+                />
+              </label>
+
+              <label className="grid gap-2 text-sm font-medium text-slate-700">
+                Description
+                <textarea
+                  value={form.description}
+                  onChange={(event) =>
+                    setForm((current) => ({ ...current, description: event.target.value }))
+                  }
+                  rows={3}
+                  placeholder="Short note about this membership plan"
+                  className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
+                />
+              </label>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <label className="grid gap-2 text-sm font-medium text-slate-700">
+                  Duration (days)
+                  <input
+                    type="number"
+                    min="1"
+                    value={form.durationDays}
+                    onChange={(event) =>
+                      setForm((current) => ({ ...current, durationDays: event.target.value }))
+                    }
+                    className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
+                  />
+                </label>
+
+                <label className="grid gap-2 text-sm font-medium text-slate-700">
+                  Price
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={form.price}
+                    onChange={(event) => setForm((current) => ({ ...current, price: event.target.value }))}
+                    className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
+                  />
+                </label>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <label className="grid gap-2 text-sm font-medium text-slate-700">
+                  Billing Cycle
+                  <select
+                    value={form.billingCycle}
+                    onChange={(event) =>
+                      setForm((current) => ({ ...current, billingCycle: event.target.value }))
+                    }
+                    className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
+                  >
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                    <option value="custom">Custom</option>
+                  </select>
+                </label>
+
+                <label className="grid gap-2 text-sm font-medium text-slate-700">
+                  Status
+                  <select
+                    value={form.isActive ? "active" : "inactive"}
+                    onChange={(event) =>
+                      setForm((current) => ({ ...current, isActive: event.target.value === "active" }))
+                    }
+                    className="rounded-[20px] border border-line bg-white px-4 py-3 outline-none transition focus:border-accent"
+                  >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </label>
+              </div>
+
+                {error && (
+                  <div className="rounded-[20px] bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {error}
+                  </div>
+                )}
+
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || !isAdmin}
+                    className="rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accentDark disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {isSubmitting ? "Saving..." : submitLabel}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-sand"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {successMessage ? (
+        <div className="rounded-[20px] bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+          {successMessage}
+        </div>
+      ) : null}
     </div>
   );
 }

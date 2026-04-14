@@ -641,7 +641,7 @@ export default function MembersPage() {
       </div>
 
       {isMemberModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
           <div className="max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-[30px] border border-white/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(246,247,249,0.94))] shadow-[0_30px_90px_-30px_rgba(0,0,0,0.4)]">
             <div className="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
               <div>
@@ -662,7 +662,7 @@ export default function MembersPage() {
               </button>
             </div>
 
-            <div className="max-h-[calc(90vh-110px)] overflow-y-auto px-4 py-6 md:px-6">
+            <div className="max-h-[calc(90vh-110px)] overflow-y-auto overscroll-contain px-4 py-6 md:px-6">
               <form className="grid gap-4" onSubmit={handleSubmit}>
                 <label className="grid gap-2 text-sm font-medium text-slate-700">
                   Name
@@ -772,7 +772,7 @@ export default function MembersPage() {
       )}
 
       {historyMemberId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
           <div className="max-h-[90vh] w-full max-w-6xl overflow-hidden rounded-[30px] border border-white/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(246,247,249,0.94))] shadow-[0_30px_90px_-30px_rgba(0,0,0,0.4)]">
             <div className="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
               <div>
@@ -793,7 +793,7 @@ export default function MembersPage() {
               </button>
             </div>
 
-            <div className="max-h-[calc(90vh-110px)] overflow-y-auto px-4 py-6 md:px-6">
+            <div className="max-h-[calc(90vh-110px)] overflow-y-auto overscroll-contain px-4 py-6 md:px-6">
               {isHistoryLoading ? (
                 <div className="rounded-[22px] bg-sand px-4 py-5 text-sm text-slate-500">
                   Loading payment history...
@@ -857,7 +857,7 @@ export default function MembersPage() {
       )}
 
       {paymentMemberId && selectedPaymentMember && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain bg-[rgba(15,17,21,0.56)] p-4 backdrop-blur-sm">
           <div className="max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-[30px] border border-white/50 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(246,247,249,0.94))] shadow-[0_30px_90px_-30px_rgba(0,0,0,0.4)]">
             <div className="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
               <div>
@@ -878,7 +878,7 @@ export default function MembersPage() {
               </button>
             </div>
 
-            <div className="max-h-[calc(90vh-110px)] overflow-y-auto px-4 py-6 md:px-6">
+            <div className="max-h-[calc(90vh-110px)] overflow-y-auto overscroll-contain px-4 py-6 md:px-6">
               <form className="grid gap-4" onSubmit={handlePaymentSubmit}>
                 <div className="rounded-[20px] border border-line bg-sand px-4 py-3 text-sm text-slate-600">
                   <span className="font-semibold text-ink">{selectedPaymentMember.name}</span>
